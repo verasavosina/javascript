@@ -2,13 +2,93 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Задача 1 — сумма чисел</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пенсионный калькулятор</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f5f5f5;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    label, input, fieldset {
+      margin-bottom: 1rem;
+    }
+    fieldset {
+      border: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    legend {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    button:hover {
+      background: #004d99;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      font-family: monospace;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fafafa;
+      resize: none;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Задача 1</h1>
-  <p>Сумма чисел 5 и 3:</p>
-  <p id="result"></p>
 
-  <script src="../js/lab1_1.js"></script>
+<h1>Пенсионный калькулятор</h1>
+
+<form id="pensionForm">
+  <label for="age">Ваш возраст (лет):</label>
+  <input type="number" id="age" name="age">
+  <div id="ageError" class="error"></div>
+
+  <fieldset>
+    <legend>Ваш пол:</legend>
+    <label>
+      <input type="radio" name="gender" value="male"> Мужчина
+    </label>
+    <label>
+      <input type="radio" name="gender" value="female"> Женщина
+    </label>
+  </fieldset>
+  <div id="genderError" class="error"></div>
+
+  <button type="submit">Рассчитать</button>
+  <button type="reset">Очистить</button>
+
+  <textarea id="result" rows="3"></textarea>
+</form>
+
+<script src="../js/lab1_1.js"></script>
 </body>
 </html>
