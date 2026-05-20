@@ -28,7 +28,7 @@ function factorial(n) {
   return BigInt(n) * factorial(n - 1);
 }
 
-function fib(n) {
+export function fib(n) {
   if (n === 0) return 0n;
   const absN = Math.abs(n);
   let prev = 0n;

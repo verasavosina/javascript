@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Тесты — Лабораторная 3</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.7/chai.js"></script>
+
+  <script>
+    const { expect } = chai;
+    mocha.setup('bdd');
+  </script>
+
+  <script src="./lab3.js" type="module"></script>
+
+  <script type="module">
+    import {
+      getDecimal,
+      normalizeUrl,
+      checkSpam,
+      truncate,
+      camelize,
+      fibs,
+      arrReverseSorted,
+      unique
+    } from './lab3.js';
+
+    describe('getDecimal(num)', () => {
+      it('getDecimal(1.23) => 0.23', () => {
+        expect(getDecimal(1.23)).to.be.closeTo(0.23, 0.0001);
+      });
+      it('getDecimal(-1.23) => 0.77', () => {
+        expect(getDecimal(-1.23)).to.be.closeTo(0.77, 0.0001);
+      });
+      it('getDecimal(1) => 0', () => {
+        expect(getDecimal(1)).to.equal(0);
+      });
+    });
+
+    describe('normalizeUrl(url)', () => {
+      it('yandex.ru => https://yandex.ru', () => {
+        expect(normalizeUrl('yandex.ru')).to.equal('https://yandex.ru');
+      });
+      it('http://yandex.ru => https://yandex.ru', () => {
+        expect(normalizeUrl('http://yandex.ru')).to.equal('https://yandex.ru');
+      });
+      it('https://yandex.ru => https://yandex.ru', () => {
+        expect(normalizeUrl('https://yandex.ru')).to.equal('https://yandex.ru');
+      });
+    });
+
+    describe('checkSpam(str)', () => {
+      it('_XxX_ => true', () => expect(checkSpam('_XxX_')).to.be.true);
+      it('__Viagra__ => true', () => expect(checkSpam('__Viagra__')).to.be.true);
+      it('test => false', () => expect(checkSpam('test')).to.be.false);
+    });
+
+    describe('truncate(str, maxlength)', () => {
+      it('длинная строка усекается', () => {
+        expect(truncate('Мама мыла раму.', 10)).to.equal('Мама мыла…');
+      });
+      it('короткая строка не меняется', () => {
+        expect(truncate('Мама мыла раму.', 100)).to.equal('Мама мыла раму.');
+      });
+    });
+
+    describe('camelize(str)', () => {
+      it('var-test-text => varTestText', () => {
+        expect(camelize('var-test-text')).to.equal('varTestText');
+      });
+    });
+
+    describe('fibs(n)', () => {
+      it('fibs(5) => [0n, 1n, 1n, 2n, 3n]', () => {
+        expect(fibs(5)).to.deep.equal([0n, 1n, 1n, 2n, 3n]);
+      });
+    });
+
+    describe('arrReverseSorted(arr)', () => {
+      it('[1, 3, 22] => [22, 3, 1]', () => {
+        const arr = [1, 3, 22];
+        expect(arrReverseSorted(arr)).to.deep.equal([22, 3, 1]);
+        expect(arr).to.deep.equal([1, 3, 22]);
+      });
+    });
+
+    describe('unique(arr)', () => {
+      it('[0, 1, 1, 2] => [0, 1, 2]', () => {
+        expect(unique([0, 1, 1, 2])).to.deep.equal([0, 1, 2]);
+      });
+      it("['a', 'b', 'c', 'c'] => ['a', 'b', 'c']", () => {
+        expect(unique(['a', 'b', 'c', 'c'])).to.deep.equal(['a', 'b', 'c']);
+      });
+    });
+
+    mocha.run();
+  </script>
+</body>
+</html>
