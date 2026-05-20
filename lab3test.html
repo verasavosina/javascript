@@ -10,15 +10,13 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.7/chai.js"></script>
+  <script>mocha.setup('bdd');</script>
 
-  <script>
-    const { expect } = chai;
-    mocha.setup('bdd');
-  </script>
-
-  <script src="./lab3.js" type="module"></script>
+  <!-- Подключаем lab2.js (обычный скрипт, без модулей) -->
+  <script src="./lab2.js"></script>
 
   <script type="module">
+    // Импортируем функции из lab3.js
     import {
       getDecimal,
       normalizeUrl,
@@ -29,6 +27,9 @@
       arrReverseSorted,
       unique
     } from './lab3.js';
+
+    // Используем chai из глобальной области
+    const { expect } = window.chai;
 
     describe('getDecimal(num)', () => {
       it('getDecimal(1.23) => 0.23', () => {
