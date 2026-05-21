@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('num');
   const errorDiv = document.getElementById('numError');
   const button = document.getElementById('countBtn');
-  const form = input.closest('form');
+  const form = document.getElementById('crowsForm'); // Лучше直接用ID
 
   function handleSubmit(event) {
     if (event && event.preventDefault) {
@@ -58,9 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     handleSubmit();
-  };
-
-      }
-    });
-  }
+  });
 });
