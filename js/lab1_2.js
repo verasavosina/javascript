@@ -24,8 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('num');
   const errorDiv = document.getElementById('numError');
   const button = document.getElementById('countBtn');
+  const form = input.closest('form'); // Находим родительскую форму (если есть)
 
-  button.addEventListener('click', () => {
+  function handleSubmit(event) {
+    // Если передан event (событие формы) - предотвращаем отправку
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
+    
     errorDiv.textContent = '';
 
     let rawValue = input.value.trim();
@@ -47,5 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const word = getCrowsWord(num);
     alert(`На ветке сидит ${num} ${word}`);
-  });
+  }
+
+  button.addEventListener('click', handleSubmit);
+
+  if (form && button.type === 'submit') {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      handleSubmit();
+    });
+  }
 });
