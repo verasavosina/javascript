@@ -24,10 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('num');
   const errorDiv = document.getElementById('numError');
   const button = document.getElementById('countBtn');
-  const form = input.closest('form'); // Находим родительскую форму (если есть)
+  const form = input.closest('form');
 
   function handleSubmit(event) {
-    // Если передан event (событие формы) - предотвращаем отправку
     if (event && event.preventDefault) {
       event.preventDefault();
     }
@@ -56,11 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   button.addEventListener('click', handleSubmit);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    handleSubmit();
+  };
 
-  if (form && button.type === 'submit') {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      handleSubmit();
+      }
     });
   }
 });
