@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Показать/скрыть текст</title>
+</head>
+<body>
+    <h1>Текст</h1>
+    <div id="text">Это важное сообщение для всех пользователей!</div>
+    <button id="toggleBtn">Скрыть текст</button>
+
+    <script>
+        const textDiv = document.getElementById('text');
+        const btn = document.getElementById('toggleBtn');
+
+        btn.addEventListener('click', () => {
+            if (textDiv.style.display === 'none') {
+                textDiv.style.display = 'block';
+                btn.textContent = 'Скрыть текст';
+            } else {
+                textDiv.style.display = 'none';
+                btn.textContent = 'Показать текст';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование div</title>
+    <style>
+        #editableDiv {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактируемый div</h1>
+    <div id="editableDiv" contenteditable="false">Этот текст можно редактировать. Нажми Ctrl+E для редактирования.</div>
+
+    <script>
+        const div = document.getElementById('editableDiv');
+        let textarea = null;
+
+        function replaceWithTextarea() {
+            textarea = document.createElement('textarea');
+            textarea.value = div.innerHTML;
+            textarea.style.width = div.offsetWidth + 'px';
+            textarea.style.height = div.offsetHeight + 'px';
+            div.parentNode.replaceChild(textarea, div);
+            textarea.focus();
+        }
+
+        function replaceWithDiv(save = true) {
+            const newDiv = document.createElement('div');
+            newDiv.id = 'editableDiv';
+            newDiv.style.cssText = div.style.cssText;
+            if (save) {
+                newDiv.innerHTML = textarea.value;
+            } else {
+                newDiv.innerHTML = div.innerHTML;
+            }
+            textarea.parentNode.replaceChild(newDiv, textarea);
+            div = newDiv;
+            textarea = null;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                if (textarea === null) {
+                    replaceWithTextarea();
+                }
+            } else if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                if (textarea !== null) {
+                    replaceWithDiv(true);
+                }
+            } else if (e.key === 'Escape') {
+                if (textarea !== null) {
+                    replaceWithDiv(false);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

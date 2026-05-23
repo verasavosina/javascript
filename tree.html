@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Дерево из объекта</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        li {
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        .folder {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Дерево</h1>
+    <div id="container"></div>
+
+    <script>
+        function createTree(container, data) {
+            const ul = document.createElement('ul');
+            
+            for (let key in data) {
+                const li = document.createElement('li');
+                li.textContent = key;
+                li.classList.add('folder');
+                
+                if (Object.keys(data[key]).length > 0) {
+                    li.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const childUl = li.querySelector('ul');
+                        if (childUl) {
+                            childUl.style.display = childUl.style.display === 'none' ? 'block' : 'none';
+                        }
+                    });
+                    const childContainer = document.createElement('div');
+                    createTree(childContainer, data[key]);
+                    li.appendChild(childContainer);
+                }
+                
+                ul.appendChild(li);
+            }
+            
+            container.appendChild(ul);
+        }
+
+        const data = {
+            "Рыбы": {
+                "форель": {},
+                "лосось": {}
+            },
+            "Деревья": {
+                "Огромные": {
+                    "секвойя": {},
+                    "дуб": {}
+                },
+                "Цветковые": {
+                    "яблоня": {},
+                    "магнолия": {}
+                }
+            }
+        };
+
+        const container = document.getElementById('container');
+        createTree(container, data);
+    </script>
+</body>
+</html>

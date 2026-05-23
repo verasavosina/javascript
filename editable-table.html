@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактируемая таблица</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #ccc;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .editing textarea {
+            width: 100%;
+            height: 60px;
+            resize: none;
+        }
+        .edit-buttons {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактируемая таблица</h1>
+    <table id="myTable">
+        <tr>
+            <td>Ячейка 1</td>
+            <td>Ячейка 2</td>
+        </tr>
+        <tr>
+            <td>Ячейка 3</td>
+            <td>Ячейка 4</td>
+        </tr>
+    </table>
+
+    <script>
+        const table = document.getElementById('myTable');
+        let editingCell = null;
+        let textarea = null;
+
+        function startEdit(cell) {
+            if (editingCell) return;
+
+            editingCell = cell;
+            const originalText = cell.textContent;
+            cell.textContent = '';
+
+            textarea = document.createElement('textarea');
+            textarea.value = originalText;
+            textarea.style.resize = 'none';
+            cell.appendChild(textarea);
+
+            const btnOk = document.createElement('button');
+            btnOk.textContent = 'OK';
+            const btnCancel = document.createElement('button');
+            btnCancel.textContent = 'ОТМЕНА';
+
+            btnOk.onclick = () => {
+                cell.textContent = textarea.value;
+                cell.removeChild(textarea);
+                cell.removeChild(btnOk);
+                cell.removeChild(btnCancel);
+                editingCell = null;
+            };
+            btnCancel.onclick = () => {
+                cell.textContent = originalText;
+                cell.removeChild(textarea);
+                cell.removeChild(btnOk);
+                cell.removeChild(btnCancel);
+                editingCell = null;
+            };
+
+            cell.appendChild(btnOk);
+            cell.appendChild(btnCancel);
+            textarea.focus();
+        }
+
+        table.addEventListener('click', (e) => {
+            const cell = e.target.closest('td');
+            if (!cell) return;
+            startEdit(cell);
+        });
+    </script>
+</body>
+</html>

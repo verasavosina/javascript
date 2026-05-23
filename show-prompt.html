@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Модальное окно с полем ввода</title>
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 300px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .modal-buttons {
+            margin-top: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>Модальное окно с вводом</h1>
+    <button id="showPromptBtn">Показать диалог</button>
+
+    <script>
+        function showPrompt(html, callback) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+            modalContent.innerHTML = `
+                <div>${html}</div>
+                <input type="text" id="promptInput" autofocus>
+                <div class="modal-buttons">
+                    <button id="okBtn">OK</button>
+                    <button id="cancelBtn">ОТМЕНА</button>
+                </div>
+            `;
+
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            const input = modalContent.querySelector('#promptInput');
+            const okBtn = modalContent.querySelector('#okBtn');
+            const cancelBtn = modalContent.querySelector('#cancelBtn');
+
+            const handleTab = (e) => {
+                if (e.key === 'Tab') {
+                    const focusable = modalContent.querySelectorAll('input, button');
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            };
+
+            document.addEventListener('keydown', handleTab);
+
+            const close = (value) => {
+                document.removeEventListener('keydown', handleTab);
+                modal.remove();
+                callback(value);
+            };
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') close(input.value);
+                if (e.key === 'Escape') close(null);
+            });
+
+            okBtn.onclick = () => close(input.value);
+            cancelBtn.onclick = () => close(null);
+        }
+
+        document.getElementById('showPromptBtn').onclick = () => {
+            showPrompt("Введите что-нибудь<br>... умное:", (value) => {
+                alert(value);
+            });
+        };
+    </script>
+</body>
+</html>

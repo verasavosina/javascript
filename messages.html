@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+    <style>
+        .message {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .close-btn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .close-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Сообщения</h1>
+    <div id="messages">
+        <div class="message">
+            <span>Премьера фильма "Майкл" запланирована на 24 апреля</span>
+            <button class="close-btn">Закрыть</button>
+        </div>
+        <div class="message">
+            <span>В России фильм появится в кинотеатрах 24 мая</span>
+            <button class="close-btn">Закрыть</button>
+        </div>
+        <div class="message">
+            <span>Фильм посвящен жизни Майкла Джексона</span>
+            <button class="close-btn">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        const closeButtons = document.querySelectorAll('.close-btn');
+
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const messageDiv = btn.parentElement;
+                messageDiv.remove();
+            });
+        });
+    </script>
+</body>
+</html>

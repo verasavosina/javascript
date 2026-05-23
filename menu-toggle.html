@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Раскрывающееся меню</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .menu-item {
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Меню</h1>
+    <ul id="menu">
+        <li>
+            <span class="menu-item">Файл</span>
+            <ul class="submenu">
+                <li>Создать</li>
+                <li>Открыть</li>
+                <li>Сохранить</li>
+                <li>Выход</li>
+            </ul>
+        </li>
+        <li>
+            <span class="menu-item">Правка</span>
+            <ul class="submenu">
+                <li>Вырезать</li>
+                <li>Копировать</li>
+                <li>Вставить</li>
+            </ul>
+        </li>
+        <li>
+            <span class="menu-item">Сервис</span>
+            <ul class="submenu">
+                <li>Настройки</li>
+                <li>Справка</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const submenu = item.nextElementSibling;
+                if (submenu && submenu.classList.contains('submenu')) {
+                    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
