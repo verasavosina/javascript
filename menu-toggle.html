@@ -2,63 +2,94 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Раскрывающееся меню</title>
+    <title>Меню-переключатель</title>
     <style>
-        ul {
-            list-style-type: none;
-            padding-left: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
         }
-        .menu-item {
+        
+        .menu {
+            display: inline-block;
+        }
+        
+        .menu .title {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 12px 20px;
             cursor: pointer;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
-            margin: 5px 0;
+            transition: background-color 0.3s;
         }
-        .submenu {
+        
+        .menu .title:hover {
+            background-color: #ff5252;
+        }
+        
+        .menu .title::before {
+            content: '▶';
+            display: inline-block;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .menu.open .title::before {
+            content: '▼';
+        }
+        
+        .menu .list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            width: 200px;
             display: none;
-            padding-left: 20px;
+        }
+        
+        .menu.open .list {
+            display: block;
+        }
+        
+        .menu .list li {
+            background-color: #f9f9f9;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .menu .list li:hover {
+            background-color: #ffebeb;
+        }
+        
+        .menu .list li:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 <body>
-    <h1>Меню</h1>
-    <ul id="menu">
-        <li>
-            <span class="menu-item">Файл</span>
-            <ul class="submenu">
-                <li>Создать</li>
-                <li>Открыть</li>
-                <li>Сохранить</li>
-                <li>Выход</li>
-            </ul>
-        </li>
-        <li>
-            <span class="menu-item">Правка</span>
-            <ul class="submenu">
-                <li>Вырезать</li>
-                <li>Копировать</li>
-                <li>Вставить</li>
-            </ul>
-        </li>
-        <li>
-            <span class="menu-item">Сервис</span>
-            <ul class="submenu">
-                <li>Настройки</li>
-                <li>Справка</li>
-            </ul>
-        </li>
-    </ul>
+
+    <div class="menu" id="menu">
+        <div class="title">
+            Сладости (нажми меня!)
+        </div>
+        
+        <ul class="list">
+            <li>Торт</li>
+            <li>Пончик</li>
+            <li>Пирожное</li>
+        </ul>
+    </div>
 
     <script>
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const submenu = item.nextElementSibling;
-                if (submenu && submenu.classList.contains('submenu')) {
-                    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-                }
-            });
+        const menu = document.getElementById('menu');
+        const title = menu.querySelector('.title');
+        
+        title.addEventListener('click', function() {
+            menu.classList.toggle('open');
         });
     </script>
+
 </body>
 </html>
