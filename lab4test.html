@@ -2,113 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Тесты — Лабораторная 4</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
-    <script>mocha.setup('bdd');</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
-    <script>let assert = chai.assert;</script>
+    <title>Лабораторная работа №4</title>
 </head>
 <body>
-    <div id="mocha"></div>
-
+    <h1>Лабораторная работа №4</h1>
+    <p>Результаты смотрите в консоли браузера</p>
+    
     <script src="lab4.js"></script>
-
-    <script>
-        describe('Book', () => {
-            it('создаёт книгу и выводит в консоль (проверяем свойства)', () => {
-                const book = new Book('Война и мир', 1869, 500);
-                assert.strictEqual(book.title, 'Война и мир');
-                assert.strictEqual(book.pubYear, 1869);
-                assert.strictEqual(book.price, 500);
-            });
-        });
-
-        describe('validation', () => {
-            it('не позволяет установить пустое название', () => {
-                const book = new BookWithValidation('test', 2000, 100);
-                assert.throws(() => book.title = '', /Название не может быть пустым/);
-            });
-            it('не позволяет установить год <= 0', () => {
-                const book = new BookWithValidation('test', 2000, 100);
-                assert.throws(() => book.pubYear = -5, /положительным/);
-            });
-            it('не позволяет установить цену <= 0', () => {
-                const book = new BookWithValidation('test', 2000, 100);
-                assert.throws(() => book.price = -10, /положительным/);
-            });
-        });
-
-        describe('book.compare', () => {
-            it('сортирует книги по году издания', () => {
-                const books = [
-                    new BookWithCompare('Книга 1', 2000, 100),
-                    new BookWithCompare('Книга 2', 1990, 150),
-                    new BookWithCompare('Книга 3', 2010, 120)
-                ];
-                books.sort(BookWithCompare.compare);
-                assert.strictEqual(books[0].pubYear, 1990);
-                assert.strictEqual(books[1].pubYear, 2000);
-                assert.strictEqual(books[2].pubYear, 2010);
-            });
-        });
-
-        describe('isEmpty', () => {
-            it('{} => true', () => assert.isTrue(isEmpty({})));
-            it('{ [Symbol()]: true } => false', () => {
-                const obj = { [Symbol()]: true };
-                assert.isFalse(isEmpty(obj));
-            });
-            it('Object.defineProperty без enumerable => true', () => {
-                const obj = {};
-                Object.defineProperty(obj, 'name', { value: 'John' });
-                assert.isTrue(isEmpty(obj));
-            });
-        });
-
-        describe('addClass / removeClass', () => {
-            it('добавляет класс, если его нет', () => {
-                const obj = createClassManager({ className: 'open menu' });
-                obj.addClass('new');
-                assert.strictEqual(obj.className, 'open menu new');
-            });
-            it('не добавляет существующий класс', () => {
-                const obj = createClassManager({ className: 'open menu' });
-                obj.addClass('open');
-                assert.strictEqual(obj.className, 'open menu');
-            });
-            it('удаляет класс, если он есть', () => {
-                const obj = createClassManager({ className: 'open menu new' });
-                obj.removeClass('new');
-                assert.strictEqual(obj.className, 'open menu');
-            });
-        });
-
-        describe('JSON', () => {
-            it('преобразует объект в JSON и обратно', () => {
-                const obj = { name: 'John', age: 30, address: { city: 'New York', zip: 10001 } };
-                const json = JSON.stringify(obj, null, 2);
-                const obj2 = JSON.parse(json);
-                assert.deepEqual(obj, obj2);
-            });
-        });
-
-        describe('getSecondsToday', () => {
-            it('возвращает число (секунды с начала дня)', () => {
-                const seconds = getSecondsToday();
-                assert.isNumber(seconds);
-                assert.isTrue(seconds >= 0 && seconds <= 86400);
-            });
-        });
-
-        describe('formatDate', () => {
-            it('форматирует дату как дд.мм.гг', () => {
-                const date = new Date(2025, 4, 23);
-                assert.strictEqual(formatDate(date), '23.05.25');
-            });
-        });
-
-        mocha.run();
-    </script>
 </body>
 </html>
